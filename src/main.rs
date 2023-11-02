@@ -14,10 +14,14 @@ impl Todo{
     }
 }
 
+fn from_string_to_i32(i_string:String) -> i32{
+    return i_string.trim().parse::<i32>().expect("int 32 expected");
+}
+
 fn main() {
     let mut todos: Vec<Todo> = Vec::new();
     loop{
-        println!("1 to add , 2 to delete, 3 to list, 4 to exit");
+        println!("1 to add , 2 to delete, 3 to list, 4 edit todo completed state , 5 to exit");
 
         let mut input = String::new();
         let _ = std::io::stdin().read_line(&mut input).unwrap();
@@ -38,7 +42,7 @@ fn main() {
                 println!("Enter todo to delete (id)");
                 let mut id_input = String::new();
                 let _ = std::io::stdin().read_line(&mut id_input).unwrap();
-                todos.remove(id_input.parse::<usize>().unwrap());
+                todos.remove(from_string_to_i32(id_input) as usize);
             }
             "3"=>{
                 for todo in &todos{
@@ -46,11 +50,17 @@ fn main() {
                 }
             }
             "4"=>{
+                println!("Enter todo to edit complited state (id)");
+                let mut id_input = String::new();
+                let _ = std::io::stdin().read_line(&mut id_input).unwrap();
+                &todos[from_string_to_i32(id_input) as usize];
+            }
+            "5"=>{
                 println!("Have a good day!");
                 break;
             }
             _ => {
-                println!("Invalid input. Please enter 1 or 2.");
+                println!("1 to add , 2 to delete, 3 to list, 4 to exit");
             }
         }
     }
