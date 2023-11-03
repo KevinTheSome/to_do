@@ -42,7 +42,7 @@ fn main() {
                 println!("Enter todo to delete (id)");
                 let mut id_input = String::new();
                 let _ = std::io::stdin().read_line(&mut id_input).unwrap();
-                todos.remove(from_string_to_i32(id_input) as usize);
+                todos.remove((from_string_to_i32(id_input)-1) as usize);
             }
             "3"=>{
                 for todo in &todos{
