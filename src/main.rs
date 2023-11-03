@@ -18,6 +18,10 @@ fn from_string_to_i32(i_string:String) -> i32{
     return i_string.trim().parse::<i32>().expect("int 32 expected");
 }
 
+fn from_string_to_bool(i_string:String) -> bool{
+    return i_string.trim().parse::<bool>().expect("boolean expected");
+}
+
 fn main() {
     let mut todos: Vec<Todo> = Vec::new();
     loop{
@@ -35,7 +39,7 @@ fn main() {
                 println!("Enter todo state on completed (false/true)");
                 let mut completed_input = String::new();
                 let _ = std::io::stdin().read_line(&mut completed_input).unwrap();
-                let mut todo = Todo::new(title_input.trim().to_string(), completed_input.trim().parse::<bool>().unwrap(), todos.len() as i32+1);
+                let mut todo = Todo::new(title_input.trim().to_string(), from_string_to_bool(completed_input), todos.len() as i32+1);
                 todos.push(todo);
             }
             "2"=>{
@@ -53,7 +57,10 @@ fn main() {
                 println!("Enter todo to edit complited state (id)");
                 let mut id_input = String::new();
                 let _ = std::io::stdin().read_line(&mut id_input).unwrap();
-                &todos[from_string_to_i32(id_input) as usize];
+                println!("Enter todo state on completed (false/true)");
+                let mut completed_input = String::new();
+                let _ = std::io::stdin().read_line(&mut completed_input).unwrap();
+                todos[(from_string_to_i32(id_input)-1) as usize].completed = from_string_to_bool(completed_input);
             }
             "5"=>{
                 println!("Have a good day!");
